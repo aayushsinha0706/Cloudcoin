@@ -1,7 +1,7 @@
 {
   "name": "cloudcoin",
   "version": "1.0.0",
-  "description": "minimal Proof of Stake cryptocurrency in JavaScript",
+  "description": "minimal Proof of Work cryptocurrency in JavaScript",
   "homepage": "https://github.com/aayushsinha0706/Cloudcoin#readme",
   "bugs": {
     "url": "https://github.com/aayushsinha0706/Cloudcoin/issues"
