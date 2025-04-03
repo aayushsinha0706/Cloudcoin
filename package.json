@@ -1,0 +1,20 @@
+{
+  "name": "cloudcoin",
+  "version": "1.0.0",
+  "description": "minimal Proof of Stake cryptocurrency in JavaScript",
+  "homepage": "https://github.com/aayushsinha0706/Cloudcoin#readme",
+  "bugs": {
+    "url": "https://github.com/aayushsinha0706/Cloudcoin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aayushsinha0706/Cloudcoin.git"
+  },
+  "license": "ISC",
+  "author": "Aayush Sinha",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
