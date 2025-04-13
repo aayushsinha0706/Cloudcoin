@@ -1,5 +1,5 @@
 const crypto = require('crypto')
-require('dotenv').config()
+const config = require('../../utils/config')
 
 class Block {
     constructor(index, hash, previousHash, timestamp, data){
@@ -12,7 +12,7 @@ class Block {
 }
 
 const genesisBlock = new Block(
-    0, process.env.GENESIS_BLOCK_HASH, '', Number(process.env.GENESIS_BLOCK_TIMESTAMP), process.env.GENESIS_BLOCK_DATA
+    0, config.GENESIS_BLOCK_HASH, '', Number(config.GENESIS_BLOCK_TIMESTAMP), config.GENESIS_BLOCK_DATA
 )
 
 let blockChain = [genesisBlock]
@@ -73,7 +73,7 @@ const isValidBlockStructure = (block) => {
 const isValidChain = (blockchainToValidate) => {
     const isValidGenesis = (block) => {
         return block.index === 0 &&
-        block.hash === process.env.GENESIS_BLOCK_HASH &&
+        block.hash === config.GENESIS_BLOCK_HASH &&
         block.previousHash === ''
     }
 
@@ -93,10 +93,20 @@ const replaceChain = (newBlocks) => {
     if (isValidChain(newBlocks) && newBlocks.length > getBlockChain().length) {
         console.log('Received blockchain is valid. Replacing current blockchain with received blockchain')
         blockChain = newBlocks
+
+        const{ broadcastLatest } = require('../p2p/p2p')
         broadcastLatest()
     } else {
         console.log('Received blockchain invalid')
     }
+}
+
+const addBlockToChain = (newBlock) => {
+    if (isValidNewBlock(newBlock, getLatestBlock())) {
+        blockChain.push(newBlock);
+        return true;
+    }
+    return false;
 }
 
 module.exports = {
@@ -107,5 +117,6 @@ module.exports = {
     isValidNewBlock,
     isValidBlockStructure,
     isValidChain,
-    replaceChain
+    replaceChain,
+    addBlockToChain
 }
