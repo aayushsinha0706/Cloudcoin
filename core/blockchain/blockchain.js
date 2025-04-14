@@ -43,10 +43,19 @@ const generateNextBlock = (blockData) => {
     const nextTimeStamp = new Date().getTime() / 1000
     const nextHash = calculateHash(nextIndex, previousBlock.hash, nextTimeStamp, blockData)
     const newBlock = new Block(nextIndex, nextHash, previousBlock.hash, nextTimeStamp, blockData)
+    addBlockToChain(newBlock)
+    
+    const{ broadcastLatest } = require('../p2p/p2p')
+    broadcastLatest()
+
     return newBlock
 }
 
 const isValidNewBlock = (newBlock, previousBlock) => {
+    if (!isValidBlockStructure(newBlock)){
+        console.log('invalid structure')
+        return false
+    }
     if (previousBlock.index + 1 !== newBlock.index) {
         console.log('invalid index')
         return false
